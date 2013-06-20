@@ -5,4 +5,4 @@
 
 2. Start the vm
    * Run 'vagrant up'
-   * Browse to http://192.168.1.10:1234
+   * Browse to http://localhost:1235

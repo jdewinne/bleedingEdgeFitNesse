@@ -14,7 +14,14 @@ class fitnesse {
 	ensure => "present"
   }
 
-  # create a directory      
+  # create a directory  
+  file { "/var/lib/fitnesse/FitNesseRoot":
+	ensure => "directory",
+	owner   => "fitnesse",
+        group   => "fitnesse",
+	require => [File["/var/lib/fitnesse"]]
+  }
+    
   file { "/var/lib/fitnesse":
 	ensure => "directory",
 	owner   => "fitnesse",
@@ -38,7 +45,7 @@ class fitnesse {
   }	
 
   exec { "clear_firewall":
-        command => "iptables -F;ifup eth1",
+        command => "iptables -F",
 	user => "root",
 	require => [Exec["fitnesse_start"]]
   }

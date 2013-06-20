@@ -9,8 +9,6 @@
 # Each component is provisioned via a Puppet manifest in the manifests directory.
 #
 
-host_only_network = "192.168.1"
-
 Vagrant::Config.run do |config|
 
   config.vm.define :fitnesse do |fitnesse_config|
@@ -24,9 +22,8 @@ Vagrant::Config.run do |config|
     fitnesse_config.vm.customize ["modifyvm", :id, "--ioapic", "on"]
     fitnesse_config.vm.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     fitnesse_config.vm.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    fitnesse_config.vm.forward_port 1234, 1235
     
-    fitnesse_config.vm.network :hostonly, host_only_network + ".10", :adapter => 2
-
     # Enable the Puppet provisioner
     fitnesse_config.vm.provision :puppet do |puppet|
       puppet.manifest_file = "singlevm.pp"
